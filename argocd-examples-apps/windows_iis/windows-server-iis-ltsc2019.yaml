@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: windows-server-iis-ltsc2019
-        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+        image: marciogmorales/iislogmonitor:latest
         command:
         - powershell.exe
         - -command
