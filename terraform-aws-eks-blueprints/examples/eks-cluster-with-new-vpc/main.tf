@@ -22,8 +22,8 @@ data "aws_eks_cluster_auth" "this" {
 
 data "aws_availability_zones" "available" {
   filter {
-    name   = "opt-in-status"
-   
+    name = "opt-in-status"
+
     values = ["opt-in-not-required"]
   }
 }
@@ -40,7 +40,6 @@ locals {
   tags = {
     Blueprint  = local.name
     GithubRepo = "github.com/aws-ia/terraform-aws-eks-blueprints"
-    Name = "Managed-Node-Linux"
   }
 }
 
@@ -91,17 +90,24 @@ module "eks_blueprints_kubernetes_addons" {
   eks_cluster_version  = module.eks_blueprints.eks_cluster_version
 
   # EKS Managed Add-ons
-  enable_amazon_eks_vpc_cni            = true
-  enable_amazon_eks_coredns            = true
-  enable_amazon_eks_kube_proxy         = true
+  enable_amazon_eks_vpc_cni    = true
+  enable_amazon_eks_coredns    = true
+  enable_amazon_eks_kube_proxy = true
 
   # Add-ons
   enable_aws_load_balancer_controller = true
   enable_metrics_server               = true
   enable_aws_cloudwatch_metrics       = true
+  enable_kube_prometheus_stack        = true
   enable_argocd                       = true
-  enable_kube_prometheus_stack      = true
-  
+  argocd_manage_add_ons               = true
+  argocd_applications = {
+    addons = {
+      path               = "chart"
+      repo_url           = "https://github.com/aws-samples/eks-blueprints-add-ons.git"
+      add_on_application = true # Indicates the root add-on application.
+    }
+  }
 
   enable_cluster_autoscaler = true
   cluster_autoscaler_helm_config = {
