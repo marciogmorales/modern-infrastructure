@@ -23,7 +23,7 @@ spec:
         command:
         - powershell.exe
         - -command
-        - "Add-WindowsFeature Web-Server; Invoke-WebRequest -UseBasicParsing -Uri 'https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.6/ServiceMonitor.exe' -OutFile 'C:\\ServiceMonitor.exe'; echo '<html><body><br/><br/><marquee><H1>Argo CD - GitOps - Test - Dec 7, 2022 - 9:56pm!!!<H1><marquee></body><html>' > C:\\inetpub\\wwwroot\\iisstart.htm; C:\\ServiceMonitor.exe 'w3svc'; "
+        - "Add-WindowsFeature Web-Server; Invoke-WebRequest -UseBasicParsing -Uri 'https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.6/ServiceMonitor.exe' -OutFile 'C:\\ServiceMonitor.exe'; echo '<html><body><br/><br/><H1>Argo CD - GitOps - Test - Dec 7, 2022 - 9:56pm!!!<H1></body><html>' > C:\\inetpub\\wwwroot\\iisstart.htm; C:\\ServiceMonitor.exe 'w3svc'; "
         ports:
         - name: http
           containerPort: 80
@@ -34,7 +34,7 @@ spec:
          - key: "os"
            operator: "Equal"
            value: "windows"
-           effect: "NoExecute"
+           effect: "NoSchedule"
 --- 
 apiVersion: v1
 kind: Service
