@@ -20,6 +20,10 @@ spec:
       containers:
       - name: windows-server-iis-ltsc2019
         image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+        command:
+        - powershell.exe
+        - -command
+        - "echo '<html><body><br/><br/><marquee><H1>Argo CD - GitOps - Test - Dec 7, 2022 - 9:56pm!!!<H1><marquee></body><html>' > C:\\inetpub\\wwwroot\\iisstart.htm"
         ports:
         - name: http
           containerPort: 80
