@@ -11,9 +11,6 @@ metadata:
   name: efs-sc
   namespace: jenkins
 provisioner: efs.csi.aws.com
-parameters:
-  provisioningMode: efs-ap
-  fileSystemID: fs-0170d3d7aa3424d5c
 ---
 apiVersion: v1
 kind: PersistentVolume
