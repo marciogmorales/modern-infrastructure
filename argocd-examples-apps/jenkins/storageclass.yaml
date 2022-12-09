@@ -11,11 +11,15 @@ metadata:
   name: efs-sc
   namespace: jenkins
 provisioner: efs.csi.aws.com
+  parameters:
+    provisioninMode: efs-ap
+    fileSystemId: fs-0170d3d7aa3424d5c
+    directoryPerms: "777"
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: efs-pv-jenkins
+  name: efs-pv
   namespace: jenkins
 spec:
   capacity:
@@ -27,11 +31,11 @@ spec:
   storageClassName: efs-sc
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-0170d3d7aa3424d5c::fsap-0ad4057cbcf11bac8 ## Edit with your own FilesystemID:AccessPointID---
+    volumeHandle: fs-0170d3d7aa3424d5c
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: efs-claim-jenkins
+  name: efs-claim
   namespace: jenkins
 spec:
   accessModes:
