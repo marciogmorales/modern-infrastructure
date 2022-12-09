@@ -19,7 +19,7 @@ metadata:
   namespace: jenkins
 spec:
   capacity:
-    storage: 10Gi
+    storage: 50Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -39,4 +39,4 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 5Gi
+      storage: 40Gi
