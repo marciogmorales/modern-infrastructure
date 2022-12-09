@@ -27,8 +27,7 @@ spec:
   storageClassName: efs-sc
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fsap-0ad4057cbcf11bac8 ## Edit with your own EFS access point
----
+    volumeHandle: fs-0170d3d7aa3424d5c::fsap-0ad4057cbcf11bac8 ## Edit with your own FilesystemID:AccessPointID---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
