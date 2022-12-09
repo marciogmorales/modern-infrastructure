@@ -15,11 +15,11 @@ provisioner: efs.csi.aws.com
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: efs-pv
+  name: efs-pv-jenkins
   namespace: jenkins
 spec:
   capacity:
-    storage: 5Gi
+    storage: 10Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -31,7 +31,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: efs-claim
+  name: efs-claim-jenkins
   namespace: jenkins
 spec:
   accessModes:
