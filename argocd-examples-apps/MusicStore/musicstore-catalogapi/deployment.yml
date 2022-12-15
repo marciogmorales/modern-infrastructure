@@ -7,7 +7,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: musicstore-catalogapi
+  name: musicstore-catalogapi-deployment
   labels:
     app: musicstore-catalogapi
     release: initial
