@@ -1,0 +1,21 @@
+apiVersion: windows.k8s.io/v1alpha1
+kind: GMSACredentialSpec
+metadata:
+  name: gmsaeks-account
+credspec:
+  CmsPlugins:
+  - ActiveDirectory
+  DomainJoinConfig:
+    Sid: S-1-5-21-857038504-468933455-1338018723
+    MachineAccountName: gmsaeks
+    Guid: 59d60a02-be02-4fd3-8a7f-c7c6c0daceaa
+    DnsTreeName: marciomorales.local
+    DnsName: marciomorales.local
+    NetBiosName: marciomorales
+  ActiveDirectoryConfig:
+    GroupManagedServiceAccounts:
+    - Name: gmsaeks
+      Scope: marciomorales.local
+    - Name: gmsaeks
+      Scope: marciomorales
+

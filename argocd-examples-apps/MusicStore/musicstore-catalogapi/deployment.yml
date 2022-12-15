@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dynamodb-serviceaccount
+  namespace: default
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: musicstore-catalogapi
+  labels:
+    app: musicstore-catalogapi
+    release: initial
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: musicstore-catalogapi
+      release: initial
+  template:
+    metadata:
+      labels:
+        app: musicstore-catalogapi
+        release: initial
+    spec:
+      containers:
+      - name: musicstore-catalogapi
+        image: marciogmorales/musicstorecatalogapi:v1
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+      nodeSelector:
+        kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: musicstore-catalogapi-service
+  namespace: default
+spec:
+  ports:
+  - name: port-80
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: musicstore-catalogapi
+    release: initial
+  type: LoadBalancer
+
