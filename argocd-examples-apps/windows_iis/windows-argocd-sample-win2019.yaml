@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows-argocd-sample-01
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: windows-argocd-sample-01
+      tier: backend
+      track: stable
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: windows-argocd-sample-01
+        tier: backend
+        track: stable
+    spec:
+      containers:
+      - name: windows-argocd-sample-01
+        image: marciogmorales/iislogmonitor:latest
+        command:
+        - powershell.exe
+        - -command
+        - "Add-WindowsFeature Web-Server; Invoke-WebRequest -UseBasicParsing -Uri 'https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.6/ServiceMonitor.exe' -OutFile 'C:\\ServiceMonitor.exe'; echo '<html><body><br/><br/><H1>Argo CD - GitOps!!!<H1></body><html>' > C:\\inetpub\\wwwroot\\iisstart.htm; C:\\ServiceMonitor.exe 'w3svc'; "
+        ports:
+        - name: http
+          containerPort: 80
+        imagePullPolicy: IfNotPresent
+      resources:
+          requests:
+            memory: "300Mi"
+            cpu: "2"
+          limits:
+            memory: "800Mi"
+            cpu: "4"
+      nodeSelector:
+        kubernetes.io/os: windows
+      tolerations:
+          - key: os/windows2019
+            operator: "Equal"
+            effect: "NoSchedule"
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: windows-argocd-sample-01-service
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: windows-argocd-sample-01
+    tier: backend
+    track: stable
+  sessionAffinity: None
+  type: LoadBalancer
+  
