@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dxesqlag-0-lb
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+spec:
+  type: LoadBalancer
+  selector:
+    dh2i.com/name: dxesqlag-0
+  ports:
+  - name: dxl
+    port: 7979
+  - name: sql
+    port: 1433
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dxesqlag-1-lb
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+spec:
+  type: LoadBalancer
+  selector:
+    dh2i.com/name: dxesqlag-1
+  ports:
+  - name: dxl
+    port: 7979
+  - name: sql
+    port: 1433
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dxesqlag-2-lb
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+spec:
+  type: LoadBalancer
+  selector:
+    dh2i.com/name: dxesqlag-2
+  ports:
+  - name: dxl
+    port: 7979
+  - name: sql
+    port: 1433

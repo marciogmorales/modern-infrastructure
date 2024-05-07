@@ -14,7 +14,7 @@ spec:
   availabilityGroupOptions: "CONTAINED"
   # Valid options are EXTERNAL (automatic failover) and NONE (no automatic failover)
   availabilityGroupClusterType: EXTERNAL
-  createLoadBalancers: true
+  createLoadBalancers: false
   template:
     spec:
       dxEnterpriseContainer:
