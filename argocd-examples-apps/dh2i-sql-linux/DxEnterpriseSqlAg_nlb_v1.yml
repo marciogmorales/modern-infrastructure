@@ -16,11 +16,6 @@ spec:
   availabilityGroupClusterType: EXTERNAL
   createLoadBalancers: true
   template:
-    metadata:
-      labels:
-        label: example
-      annotations:
-        annotation: example
     spec:
       dxEnterpriseContainer:
         image: "docker.io/dh2i/dxe:latest"
