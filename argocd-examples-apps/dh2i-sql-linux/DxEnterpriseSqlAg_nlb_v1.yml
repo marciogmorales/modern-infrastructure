@@ -1,0 +1,124 @@
+apiVersion: dh2i.com/v1
+kind:  DxEnterpriseSqlAg
+metadata:
+  name: dxesqlag
+spec:
+  synchronousReplicas: 3
+  asynchronousReplicas: 0
+  # ConfigurationOnlyReplicas are only allowed with availabilityGroupClusterType set to EXTERNAL
+  configurationOnlyReplicas: 0            
+  availabilityGroupName: AG1
+  # Listener port for the availability group (uncomment to apply)
+  #availabilityGroupListenerPort: 14033
+  # For a contained availability group, add the option CONTAINED
+  availabilityGroupOptions: "CONTAINED"
+  # Valid options are EXTERNAL (automatic failover) and NONE (no automatic failover)
+  availabilityGroupClusterType: EXTERNAL
+  createLoadBalancers: true
+  template:
+    metadata:
+      labels:
+        label: example
+      annotations:
+        annotation: example
+    spec:
+      dxEnterpriseContainer:
+        image: "docker.io/dh2i/dxe:latest"
+        imagePullPolicy: Always
+        acceptEula: true
+        clusterSecret: dxe
+        vhostName: VHOST1
+        joinExistingCluster: false
+        # QoS â€“ guaranteed (uncomment to apply)
+        #resources:
+          #limits:
+            #memory: 1Gi
+            #cpu: '1'
+        # Configuration options for the required persistent volume claim for DxEnterprise
+        volumeClaimConfiguration:
+          storageClassName: null
+          resources:
+            requests:
+              storage: 1Gi
+      mssqlServerContainer:
+        image: "mcr.microsoft.com/mssql/server:latest"
+        imagePullPolicy: Always
+        mssqlSecret: mssql
+        acceptEula: true
+        mssqlPID: Developer
+        mssqlConfigMap: null
+        # QoS â€“ guaranteed (uncomment to apply)
+        #resources:
+          #limits:
+            #memory: 2Gi
+            #cpu: '2'
+        # Configuration options for the required persistent volume claim for SQL Server
+        volumeClaimConfiguration:
+          storageClassName: io2
+          resources:
+            requests:
+              storage: 4Gi
+      # Additional side-car containers, such as mssql-tools (uncomment to apply)
+      #containers:
+      #- name: mssql-tools
+          #image: "mcr.microsoft.com/mssql-tools"
+          #command: [ "/bin/sh" ]
+          #args: [ "-c", "tail -f /dev/null" ]
+      topologySpreadConstraints:
+      - topologyKey: topology.kubernetes.io/zone
+        maxSkew: 1
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabelKeys:
+            dh2i.com/entity: dxesqlag
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dxesqlag-0-lb
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+spec:
+  type: LoadBalancer
+  selector:
+    dh2i.com/name: dxesqlag-0
+  ports:
+  - name: dxl
+    port: 7979
+  - name: sql
+    port: 1433
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dxesqlag-1-lb
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+spec:
+  type: LoadBalancer
+  selector:
+    dh2i.com/name: dxesqlag-1
+  ports:
+  - name: dxl
+    port: 7979
+  - name: sql
+    port: 1433
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dxesqlag-2-lb
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+spec:
+  type: LoadBalancer
+  selector:
+    dh2i.com/name: dxesqlag-2
+  ports:
+  - name: dxl
+    port: 7979
+  - name: sql
+    port: 1433
