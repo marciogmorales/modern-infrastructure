@@ -64,13 +64,13 @@ spec:
           #image: "mcr.microsoft.com/mssql-tools"
           #command: [ "/bin/sh" ]
           #args: [ "-c", "tail -f /dev/null" ]
-      topologySpreadConstraints:
-      - topologyKey: topology.kubernetes.io/zone
-        maxSkew: 1
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabelKeys:
-            dh2i.com/entity: dxesqlag
+      # topologySpreadConstraints:
+      # - topologyKey: topology.kubernetes.io/zone
+      #   maxSkew: 1
+      #   whenUnsatisfiable: DoNotSchedule
+      #   labelSelector:
+      #     matchLabelKeys:
+      #       dh2i.com/entity: dxesqlag
 ---
 apiVersion: v1
 kind: Service
