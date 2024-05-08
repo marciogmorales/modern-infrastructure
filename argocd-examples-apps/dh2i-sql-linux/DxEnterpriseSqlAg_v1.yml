@@ -49,20 +49,20 @@ spec:
             #cpu: '2'
         # Configuration options for the required persistent volume claim for SQL Server
         volumeClaimConfiguration:
-          storageClassName: io2
+          storageClassName: gp2
           resources:
             requests:
-              storage: 4Gi
+              storage: 20Gi
       # Additional side-car containers, such as mssql-tools (uncomment to apply)
       #containers:
       #- name: mssql-tools
           #image: "mcr.microsoft.com/mssql-tools"
           #command: [ "/bin/sh" ]
           #args: [ "-c", "tail -f /dev/null" ]
-      # topologySpreadConstraints:
-      # - topologyKey: topology.kubernetes.io/zone
-      #   maxSkew: 1
-      #   whenUnsatisfiable: DoNotSchedule
-      #   labelSelector:
-      #     matchLabelKeys:
-      #       dh2i.com/entity: dxesqlag
+      topologySpreadConstraints:
+      - topologyKey: topology.kubernetes.io/zone
+        maxSkew: 1
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabelKeys:
+            dh2i.com/entity: dxesqlag
