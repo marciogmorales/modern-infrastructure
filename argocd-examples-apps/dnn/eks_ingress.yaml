@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: iis-dnn-a82378d43adb-service
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+     app: iis-dnn-277ee3771337
+     release: initial
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: default
+  name: iis-dnn-a82378d43adb5-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=60
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: iis-dnn-a82378d43adb-service
+                port:  
+                  number: 80
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: iis-dnn-277ee3771337-service
+#   namespace: default
+# spec:
+#   type: ClusterIP # Use ClusterIP (the default) so that the service is only accessible within the cluster.
+#   selector:
+#     app: iis-dnn-277ee3771337
+#     release: initial
+#   ports:
+#     - name: port-80
+#       port: 80 # external port must match ingress
+#       protocol: TCP
+#       targetPort: 80 # internal port
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   annotations:
+#     kubernetes.io/ingress.class: alb
+#     alb.ingress.kubernetes.io/target-type: ip
+#     alb.ingress.kubernetes.io/scheme: internet-facing
+#   labels:
+#     app: iis-dnn-277ee3771337
+#   name: iis-dnn-277ee3771337-ingress
+#   namespace: default
+# spec:
+#   rules:
+#   - host:
+#     http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: iis-dnn-277ee3771337-service
+#             port:
+#               number: 80
+
+

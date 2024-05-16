@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iis-dnn-277ee3771337-deployment
+  labels:
+    app: iis-dnn-277ee3771337
+    release: initial
+    shortImageDigest: 328dd97abfe931e18beb472b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iis-dnn-277ee3771337
+      release: initial
+  template:
+    metadata:
+      labels:
+        app: iis-dnn-277ee3771337
+        release: initial
+    spec:
+      containers:
+      - name: iis-dnn-277ee3771337
+        image: 798707654575.dkr.ecr.us-east-1.amazonaws.com/iis-dnn-277ee3771337:latest
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "1"
+            memory: 200Mi
+          limits:
+            cpu: "1.5"
+            memory: 500Mi
+      nodeSelector:
+        kubernetes.io/os: windows
+      tolerations:
+          - key: os/windows2019
+            effect: "NoSchedule"
