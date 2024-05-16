@@ -11,7 +11,7 @@ spec:
   selector:
      app: iis-dnn-277ee3771337
      release: initial
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

@@ -26,10 +26,10 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: "1"
+            cpu: "0.5"
             memory: 200Mi
           limits:
-            cpu: "1.5"
+            cpu: "1"
             memory: 500Mi
       nodeSelector:
         kubernetes.io/os: windows
