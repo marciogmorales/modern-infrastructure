@@ -9,7 +9,7 @@ spec:
       app: windows-argocd-sample-01
       tier: backend
       track: stable
-  replicas: 1
+  replicas: 5
   template:
     metadata:
       labels:
@@ -28,34 +28,9 @@ spec:
         - name: http
           containerPort: 80
         imagePullPolicy: IfNotPresent
-      resources:
-          requests:
-            memory: "300Mi"
-            cpu: "2"
-          limits:
-            memory: "800Mi"
-            cpu: "4"
       nodeSelector:
         kubernetes.io/os: windows
       tolerations:
           - key: os/windows2019
             operator: "Equal"
             effect: "NoSchedule"
---- 
-apiVersion: v1
-kind: Service
-metadata:
-  name: windows-argocd-sample-01-service
-  namespace: default
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: windows-argocd-sample-01
-    tier: backend
-    track: stable
-  sessionAffinity: None
-  type: LoadBalancer
-  
