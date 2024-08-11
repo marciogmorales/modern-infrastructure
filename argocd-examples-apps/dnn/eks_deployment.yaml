@@ -33,6 +33,6 @@ spec:
             memory: 500Mi
       nodeSelector:
         kubernetes.io/os: windows
-      tolerations:
-          - key: os/windows2019
-            effect: "NoSchedule"
+      # tolerations:
+      #     - key: os/windows2019
+      #       effect: "NoSchedule"
