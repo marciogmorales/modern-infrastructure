@@ -1,0 +1,15 @@
+# GitHub Action name
+name: First Workflow
+
+# How to run (workflow_dispatch enable manual trigger for the workflow)
+on: workflow_dispatch
+
+# Jobs
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print greeting
+        run: echo "Hello World!"
+      - name: Print goodbye
+        run: echo "Done - bye!"
