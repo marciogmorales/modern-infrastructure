@@ -6,7 +6,7 @@ on:
       - 'main'
     
 jobs:
-  test:
+  test-linux:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -23,8 +23,25 @@ jobs:
       - name: Run tests
         run: npm test
 
+  test-windows:
+    runs-on: windows-2022
+    defaults:
+      run:
+        working-directory: ./second-action-react
+    steps:
+      - name: Pull code from git
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependecies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+
   deploy:
-    needs: test
+    needs: [test-linux, test-windows]
     runs-on: ubuntu-latest
     defaults:
       run:
