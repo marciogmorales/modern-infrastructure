@@ -1,4 +1,4 @@
-name: React Test Workflow
+name: React Workflow
 
 on: 
   push: 
@@ -22,3 +22,22 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./second-action-react
+    steps:
+      - name: Pull code from git
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependecies
+        run: npm ci
+      - name: Build project
+        run: npm run build
+      - name: Deploy project
+        run: echo "Deploying..."
