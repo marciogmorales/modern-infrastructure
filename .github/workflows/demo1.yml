@@ -1,22 +1,22 @@
 name: Events test
 
 on: 
-  # push: 
-  #   branches:
-  #     - 'main'
+  push: 
+    branches:
+      - 'main'
+    paths-ignore:
+      - '.github/workflows'
   pull_request:
     types:
       - opened
   workflow_dispatch:
-
-
-    
+   
 jobs:
   test-events:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./second-action-react
+        working-directory: second-action-react
     steps:
         - name: Output event data
           run: echo "${{ toJSON(github.event) }}"
