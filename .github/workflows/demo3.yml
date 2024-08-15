@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Pull code from git
         uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Cache dependecies
         uses: actions/cache@v4
         with:
@@ -22,8 +26,7 @@ jobs:
         run: npm run test
 
   build:
-    needs:
-      - test
+    needs: test
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -31,6 +34,10 @@ jobs:
     steps:
       - name: Pull code from git
         uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Cache dependecies
         uses: actions/cache@v4
         with:
