@@ -13,7 +13,7 @@ jobs:
     environment: DEV
     env: # GITHUB ENV
       MONGODB_CLUSTER_ADDRESS: ${{ vars.DEV_CLUSTER_ADDRESS }}
-      MONGODB_USERNAME: ${{ secrets.DEV_USERNAME }}
+      MONGODB_USERNAME: ${{ secrets.DEV_USER }}
       MONGODB_PASSWORD: ${{ secrets.DEV_PASSWORD }}
     # env: REPO INFO
     #   MONGODB_CLUSTER_ADDRESS: ${{ vars.MONGODB_CLUSTER_ADDRESS }}
