@@ -1,0 +1,37 @@
+name: JDeployment
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+env:
+  MONGODB_DN_NAME: gha-demo
+          
+jobs:
+  test:
+    env:
+      MONGODB_CLUSTER_ADDRESS: cluster0.nex0w.mongodb.net
+      MONGODB_USERNAME: marciogmorales
+      MONGODB_PASSWORD: 2IkydECK7tMRpqUE
+      PORT: 8080
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api_node
+    steps:
+      - name: Pull code from git
+        uses: actions/checkout@v4
+      - name: Cache dependecies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependecies
+        run: npm ci
+      - name: Run server
+        run: npm start & npx wait-on http://127.0.0.1:$PORT
+      - name: Run tests
+        run: npm test
+      - name: Output information
+        run: echo ${{ env.MONGODB_USERNAME }}'
