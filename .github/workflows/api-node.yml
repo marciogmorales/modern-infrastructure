@@ -35,4 +35,5 @@ jobs:
         run: npm test
       - name: Output information
         run: |
-          echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
+          echo "MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}"
+          echo "MONGODB_CLUSTER_ADDRESS" ${{ vars.MONGODB_CLUSTER_ADDRESS }}
