@@ -10,10 +10,15 @@ env:
           
 jobs:
   test:
-    env:
-      MONGODB_CLUSTER_ADDRESS: ${{ vars.MONGODB_CLUSTER_ADDRESS }}
-      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+    environment: DEV
+    env: # GITHUB ENV
+      MONGODB_CLUSTER_ADDRESS: ${{ vars.DEV_CLUSTER_ADDRESS }}
+      MONGODB_USERNAME: ${{ secrets.DEV_USERNAME }}
+      MONGODB_PASSWORD: ${{ secrets.DEV_PASSWORD }}
+    # env: REPO INFO
+    #   MONGODB_CLUSTER_ADDRESS: ${{ vars.MONGODB_CLUSTER_ADDRESS }}
+    #   MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
+    #   MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
     runs-on: ubuntu-latest
     defaults:
