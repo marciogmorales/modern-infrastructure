@@ -5,6 +5,9 @@ on:
       - main
 jobs:
   lint:
+    defaults:
+      run:
+        working-directory: ./api-node-01
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -20,6 +23,9 @@ jobs:
       - name: Lint code
         run: npm run lint
   test:
+    defaults:
+      run:
+        working-directory: ./api-node-01
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -33,13 +39,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Test code
+        id: test-code-id
         run: npm run test
       - name: Upload test report
+        if: steps.test-code-id.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
           path: test.json
   build:
+    defaults:
+      run:
+        working-directory: ./api-node-01
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -62,6 +73,9 @@ jobs:
           name: dist-files
           path: dist
   deploy:
+    defaults:
+      run:
+        working-directory: ./api-node-01
     needs: build
     runs-on: ubuntu-latest
     steps:
