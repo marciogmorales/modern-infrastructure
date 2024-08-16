@@ -34,4 +34,5 @@ jobs:
       - name: Run tests
         run: npm test
       - name: Output information
-        run: echo ${{ env.MONGODB_USERNAME }}'
+        run: |
+          echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
