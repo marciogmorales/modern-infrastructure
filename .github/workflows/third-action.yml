@@ -3,6 +3,28 @@ name: Website
 on: workflow_dispatch
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./third-action-react
+    steps:
+      - name: Pull code from git
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Cache dependecies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependecies
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
+
   test:
     runs-on: ubuntu-latest
     defaults:
@@ -24,35 +46,14 @@ jobs:
         run: npm ci
       - name: Test code
         run: npm run test
-
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./third-action-react
-    steps:
-      - name: Pull code from git
-        uses: actions/checkout@v4
-      - name: Install NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Cache dependecies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Build project
-        run: npm run build
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: dist-files
-          path: dist
+          name: test-report
+          path: test.json
 
-  deploy:
-    needs: build
+  build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get build artifacts
