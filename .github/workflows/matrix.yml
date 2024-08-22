@@ -2,6 +2,9 @@ name: Matrix Demo
 on: push
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: ./second-action-react
     strategy:
       matrix:
         node-version: [16, 20]
