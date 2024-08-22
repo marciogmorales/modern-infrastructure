@@ -8,8 +8,15 @@ jobs:
         working-directory: ./second-action-react
     strategy:
       matrix:
-        node-version: [12, 14, 16, 20]
+        node-version: [14, 18, 20]
         operating-system: [ubuntu-latest, windows-latest]
+        include:
+          - node-version: 18
+            operating-system: ubuntu-latest
+        exclude:
+          - node-version: 14
+            operating-system: windows-latest
+       
     runs-on: ${{ matrix.operating-system }}
     steps:
       - name: Get Code
