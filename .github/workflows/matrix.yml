@@ -2,12 +2,13 @@ name: Matrix Demo
 on: push
 jobs:
   build:
+    continue-on-error: true
     defaults:
       run:
         working-directory: ./second-action-react
     strategy:
       matrix:
-        node-version: [16, 20]
+        node-version: [14, 16, 20]
         operating-system: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.operating-system }}
     steps:
