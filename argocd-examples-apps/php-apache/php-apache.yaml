@@ -2,19 +2,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: php-apache
-  name: php-apache
+  name: nginx
 spec:
   selector:
     matchLabels:
-      run: php-apache
+      run: nginx
   template:
     metadata:
       labels:
         run: php-apache
     spec:
       containers:
-      - name: php-apache
-        image: php:8.1.33-zts-trixie
+      - name: nginx
+        image: nginx:1.25.3
         ports:
         - containerPort: 80
         resources:
@@ -36,6 +36,6 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    run: php-apache
+    run: nginx
   sessionAffinity: None
   type: LoadBalancer
