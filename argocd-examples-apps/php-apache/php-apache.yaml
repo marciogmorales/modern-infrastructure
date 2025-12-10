@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        run: php-apache
+        run: nginx
     spec:
       containers:
       - name: nginx
