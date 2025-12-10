@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: php-apache
   name: php-apache
 spec:
   selector:
@@ -28,7 +29,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: php-apache-service
-  namespace: default
+  namespace: php-apache
 spec:
   ports:
   - port: 80
