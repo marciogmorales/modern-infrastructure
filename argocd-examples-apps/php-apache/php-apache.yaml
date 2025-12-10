@@ -38,4 +38,4 @@ spec:
   selector:
     run: nginx
   sessionAffinity: None
-  type: LoadBalancer
+  type: ClusterIP
