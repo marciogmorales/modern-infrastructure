@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: httpd
-        image: httpd:trixie
+        image: nginx:trixie
         ports:
         - containerPort: 80
         resources:
@@ -38,4 +38,4 @@ spec:
   selector:
     run: httpd
   sessionAffinity: None
-  type: ClusterIP
+  type: LoadBalancer
